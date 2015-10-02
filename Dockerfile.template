@@ -4,13 +4,11 @@ RUN apt-get update && \
   apt-get install -y libavahi-compat-libdnssd-dev unzip && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /usr/src/app && ln -s /usr/src/app /app
+RUN mkdir -p /usr/src/app && ln -s /usr/src/app /app && ln -s /app /volumio
 
 COPY . /usr/src/app
 
 WORKDIR /usr/src/app
-
-RUN pwd && ls
 
 RUN curl -L https://github.com/volumio/Volumio2-UI/archive/dist.zip -o ui.zip && \
   unzip ui.zip && \
