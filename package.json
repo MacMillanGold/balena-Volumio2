@@ -3,7 +3,7 @@
   "version": "2.0.0-alpha4",
   "private": false,
   "scripts": {
-    "start": "nodejs ./index.js"
+    "start": "node ./index.js"
   },
   "dependencies": {
     "album-art": "^1.0.2",
