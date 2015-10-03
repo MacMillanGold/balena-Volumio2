@@ -6,17 +6,19 @@ RUN apt-get update && \
 
 RUN mkdir -p /usr/src/app && ln -s /usr/src/app /app && ln -s /app /volumio
 
-COPY . /usr/src/app
-
-WORKDIR /usr/src/app
+COPY package.json /app
+WORKDIR /app
+RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm --production && npm cache clean
 
 RUN curl -L https://github.com/volumio/Volumio2-UI/archive/dist.zip -o ui.zip && \
   unzip ui.zip && \
-  mv Volumio2-UI-dist/ ./http/www/ && \
+  mv Volumio2-UI-dist/ /app/http_www/ && \
   rm ui.zip
 
 RUN apt-get remove -y unzip && apt-get autoremove -y
 
-RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm --production && npm cache clean
+COPY . /app
+
+RUN mv /app/http_www /app/http/www
 
 CMD [ "npm", "start" ]
