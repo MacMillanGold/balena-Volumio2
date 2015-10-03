@@ -199,7 +199,8 @@ ControllerVolumioDiscovery.prototype.startMDNSBrowse=function()
 	}
 	catch(error)
 	{
-		self.startMDNSBrowse();
+		console.log(error);
+		setImmediate(function () { self.startMDNSBrowse(); });
 	}
 }
 
