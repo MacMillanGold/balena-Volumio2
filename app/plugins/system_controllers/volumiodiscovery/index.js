@@ -117,7 +117,7 @@ ControllerVolumioDiscovery.prototype.startAdvertisement=function()
 	}
 	catch(ecc)
 	{
-		console.log(ecc);
+		console.log(ecc, ecc.stack);
 		self.startAdvertisement();
 	}
 }
