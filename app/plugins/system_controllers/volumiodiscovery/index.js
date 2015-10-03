@@ -117,8 +117,8 @@ ControllerVolumioDiscovery.prototype.startAdvertisement=function()
 	}
 	catch(ecc)
 	{
-		console.log(ecc);
-		self.startAdvertisement();
+		//console.log(ecc);
+		setTimeout(function () { self.startAdvertisement() });
 	}
 }
 
