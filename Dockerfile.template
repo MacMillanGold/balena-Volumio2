@@ -5,9 +5,9 @@ RUN apt-get update && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/app && ln -s /usr/src/app /app && ln -s /app /volumio
-
-COPY package.json /app
 WORKDIR /app
+
+COPY package.json /app/
 RUN DEBIAN_FRONTEND=noninteractive JOBS=MAX npm install --unsafe-perm --production && npm cache clean
 
 RUN curl -L https://github.com/volumio/Volumio2-UI/archive/dist.zip -o ui.zip && \
