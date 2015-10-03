@@ -115,9 +115,10 @@ ControllerVolumioDiscovery.prototype.startAdvertisement=function()
 		});
 		self.ad.start();
 	}
-	catch(ecc)
+	catch(err)
 	{
-		console.log(ecc, ecc.stack);
+		console.log(err, err.stack);
+		throw err;
 		//self.startAdvertisement();
 	}
 }
@@ -200,7 +201,8 @@ ControllerVolumioDiscovery.prototype.startMDNSBrowse=function()
 	catch(error)
 	{
 		console.log(error);
-		self.startMDNSBrowse();
+		throw err;
+		//self.startMDNSBrowse();
 	}
 }
 
