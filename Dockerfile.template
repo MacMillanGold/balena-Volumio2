@@ -2,7 +2,10 @@ FROM resin/%%RESIN_ARCH%%-debian:jessie
 
 #RUN echo "exit 0" > /usr/sbin/policy-rc.d
 
-RUN curl -sL https://deb.nodesource.com/setup_0.12 | bash -
+RUN apt-get update && \
+  apt-get install -y curl && \
+  apt-get clean && rm -rf /var/lib/apt/lists/* && \
+  curl -sL https://deb.nodesource.com/setup_0.12 | bash -
 
 RUN apt-get update && \
   apt-get install -y libavahi-compat-libdnssd-dev unzip nodejs && \
