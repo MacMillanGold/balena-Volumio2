@@ -11,12 +11,9 @@ RUN apt-get update && \
 
 RUN apt-get update && \
   apt-get install -y libavahi-compat-libdnssd-dev unzip  && \
-  sed s/AVAHI_DAEMON_DETECT_LOCAL=1/AVAHI_DAEMON_DETECT_LOCAL=0/ </etc/default/avahi-daemon >/etc/default/avahi-daemon && \
+  sed -i -e "s@#enable-dbus=yes@enable-dbus=no@" -e "s@#host-name=foo@host-name=$(echo $RESIN_DEVICE_UUID | cut -c1-7)@" /etc/avahi/avahi-daemon.conf && \
   /etc/init.d/avahi-daemon restart  && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN /etc/init.d/avahi-daemon status
-RUN /etc/init.d/avahi-daemon start --debug
 
 RUN mkdir -p /usr/src/app && ln -s /usr/src/app /app && ln -s /app /volumio
 WORKDIR /app
