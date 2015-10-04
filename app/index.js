@@ -4,17 +4,19 @@ var fs=require('fs-extra');
 var exec = require('child_process').exec;
 var winston = require('winston');
 
+var LOG_FILE = '/data/volumio.log';
+
 // Define the CoreCommandRouter class
 module.exports = CoreCommandRouter;
 function CoreCommandRouter (server) {
 	// This fixed variable will let us refer to 'this' object at deeper scopes
 	var self = this;
 
-	fs.ensureFileSync('/var/log/volumio.log');
+	fs.ensureFileSync(LOG_FILE);
 	self.logger = new (winston.Logger)({
 		transports: [
 			new (winston.transports.Console)(),
-			new (winston.transports.File)({ filename: '/var/log/volumio.log',
+			new (winston.transports.File)({ filename: LOG_FILE,
 											json: false})
 		]
 	});
