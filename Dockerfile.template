@@ -1,10 +1,11 @@
-FROM resin/%%RESIN_ARCH%%-node:0.12
+FROM resin/%%RESIN_ARCH%%-debian:jessie
 
-RUN echo "exit 0" > /usr/sbin/policy-rc.d
-RUN /etc/init.d/dbus stop && rm /var/run/dbus/* || true && /etc/init.d/dbus start
+#RUN echo "exit 0" > /usr/sbin/policy-rc.d
+
+RUN curl -sL https://deb.nodesource.com/setup_0.12 | bash -
 
 RUN apt-get update && \
-  apt-get install -y libavahi-compat-libdnssd-dev unzip && \
+  apt-get install -y libavahi-compat-libdnssd-dev unzip nodejs && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/app && ln -s /usr/src/app /app && ln -s /app /volumio
