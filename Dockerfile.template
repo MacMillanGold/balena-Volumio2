@@ -3,16 +3,16 @@ FROM resin/%%RESIN_ARCH%%-debian:jessie
 RUN echo "exit 0" > /usr/sbin/policy-rc.d
 
 RUN apt-get update && \
-  apt-get install -y curl && \
+  apt-get install -y curl sed && \
   curl -sL https://deb.nodesource.com/setup_0.12 | bash - && \
   apt-get install -y nodejs && \
-  apt-get remove -y curl && apt-get autoremove -y && \
+  apt-get remove -y curl sed && apt-get autoremove -y && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && \
   apt-get install -y libavahi-compat-libdnssd-dev unzip  && \
-  /etc/init.d/dbus restart && \
-  apt-get install --reinstall avahi-daemon && \
+  sed s/AVAHI_DAEMON_DETECT_LOCAL=1/AVAHI_DAEMON_DETECT_LOCAL=0/ </etc/default/avahi-daemon >/etc/default/avahi-daemon && \
+  /etc/init.d/avahi-daemon restart  && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/app && ln -s /usr/src/app /app && ln -s /app /volumio
