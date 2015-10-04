@@ -11,6 +11,8 @@ RUN apt-get update && \
 
 RUN apt-get update && \
   apt-get install -y libavahi-compat-libdnssd-dev unzip  && \
+  /etc/init.d/dbus restart && \
+  apt-get install --reinstall avahi-daemon && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/app && ln -s /usr/src/app /app && ln -s /app /volumio
